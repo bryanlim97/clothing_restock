@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+   <body>
+   
+      <h2 style = "text-align: center;">Urban Restock Notifier</h2>
+		
+      <!-- If the action is POST, redirect back to root -->
+      <form action = "http://localhost:5000/" method = post>
+         <fieldset>
+            
+            <div style = font-size:20px; font-weight:bold; margin-left:150px;>
+               {{ form.product_name.label }}<br>
+               {{ form.product_name }}
+               <br>
+
+               {{ form.size.label }}<br>
+               {{ form.size }}
+               <br>
+
+               {{ form.product_url.label }}<br>
+               {{ form.product_url }}
+               <br>
+
+               {{ form.submit() }}
+
+            </div>
+            
+         </fieldset>
+      </form>
+      
+   </body>
+</html>
