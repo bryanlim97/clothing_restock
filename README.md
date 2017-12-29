@@ -6,3 +6,4 @@ To use the app, simply modify the fields in `config.py`. Note: the default websi
 
 ## Things to Note
 Because Selenium interacts with HTML data and every website is unique, some level of research is involved to find the correct tags/names of HTML elements (use the inspect tool). Also, although this app was made with generality in mind note that certain sites behave differently from others. For example, some websites don't use dropdown menus for size selection but rather a grid system.
+To learn more about using Google's API, follow this link: https://developers.google.com/gmail/api/quickstart/python
