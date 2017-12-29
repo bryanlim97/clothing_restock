@@ -9,14 +9,14 @@ def crawl(product_name, size, product_url):
 	"""Interact with the internet. The main logic flow is as follows:
 
 	First ensure that the site URL is correct.
-	If so, search for the item using the searchbar.
-	If no items are returned, assume the item no longer exists.
-	Else, try to go to the product URL.
-		If this works, interact with the size dropdown menu.
-			Try to select the size. 
-				If it doesn't let you, it's not in stock and try again later.
-				If it is, then email!
-		If not, assume the item is gone. 
+		If so, search for the item using the searchbar.
+			If no items are returned, assume the item no longer exists.
+			Else, try to go to the product URL.
+				If this works, interact with the size dropdown menu.
+					Try to select the size. 
+						If it doesn't let you, it's not in stock and try again later.
+						Else it is, then email!
+				If not, assume the item is gone. 
 
 	"""
 
