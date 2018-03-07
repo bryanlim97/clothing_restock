@@ -12,8 +12,8 @@ def index():
 	"""Renders the homepage which is a form.
 	
 	If the action to the form is a POST: set the variables,
-	call cralwer, and redirect to the 'success' view once 
-	execution is completed
+	call crawler, and redirect to the 'success' view once 
+	execution is completed.
 	
 	"""
 	form = SignupForm(request.form)

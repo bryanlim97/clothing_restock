@@ -5,19 +5,18 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import Select
 import config, mail, time
 
-def crawl(product_name, size, product_url):
+def crawl(product_name, my_size, product_url):
 	"""Interact with the internet. The main logic flow is as follows:
 
 	First ensure that the site URL is correct.
 		If so, search for the item using the searchbar.
 			If no items are returned, assume the item no longer exists.
 			Else, try to go to the product URL.
-				If this works, interact with the size dropdown menu.
-					Try to select the size. 
-						If it doesn't let you, it's not in stock and try again later.
-						Else it is, then email!
-				If not, assume the item is gone. 
-
+				If this works, try to create a list of the unreachable sizes.
+					Check if your size is in this unreachable list. 
+						If it is, sleep.
+						Else, your item has been restocked!
+				If the list is empty, all sizes are available and send a restock email!
 	"""
 
 	found = False
@@ -41,21 +40,29 @@ def crawl(product_name, size, product_url):
 			else:
 				try:
 					driver.get(product_url)
-					select = Select(driver.find_element_by_name(config.SELECT_BAR_NAME))
-
-					if config.NO_EXIST in driver.page_source:
-						mail.gone(config.SITE_NAME, product_NAME)
-						break
-
-					try:
-						select.select_by_visible_text(size.upper())
-						mail.restocked(config.SITE_NAME, product_name, driver.current_url)
-						found = True
-
-					except:
-						time.sleep(TIME_TO_SLEEP)
-
 				except:
-					mail.gone(config.SITE_NAME, product_name)
+					mail.err(config.SITE_URL)
+				try:
+					not_stocked = driver.find_elements_by_xpath(config.XPATH)
+				except:
+					mail.restocked(config.SITE_NAME, product_name, driver.current_url)
 					break
+
+				if config.NO_EXIST in driver.page_source:
+					mail.gone(config.SITE_NAME, product_NAME)
+					break
+
+				found = True
+
+				for sizes in not_stocked:
+					if sizes.text == my_size.upper():
+						found = False
+
+				if found:
+					mail.restocked(config.SITE_NAME, product_name, driver.current_url)
+					break
+				else:
+					print("Sleeping...")
+					time.sleep(config.TIME_TO_SLEEP)
+
 
